@@ -21,7 +21,8 @@ module Util = struct
   let ask_yes_or_no () =
     try
       let yes_or_no = read_line() in
-      yes_or_no.[0] = 'y' || yes_or_no.[0] = 'Y'
+      Char.equal (yes_or_no.[0]) 'y' ||
+      Char.equal (yes_or_no.[0]) 'Y'
     with _ -> false
 end
 
