@@ -1,5 +1,7 @@
 #!/bin/bash
-out=`mochi-nontremination -only-result -non-termination $1`
+# install mochi@b3a7392 as mochi-nontermination
+# (latest mochi does not support nontermination)
+out=`mochi-nontermination -only-result -non-termination $1`
 if [ `echo $out | grep -cF Non-terminating` -eq 1 ]; then
   echo -n "Valid"
 else
