@@ -4,7 +4,7 @@ if [ -d $1 ]; then
   mkdir -p out/$1
   for file in `ls $1 | grep -E '\.ml$'`; do
     # echo "### $file"
-    ml2hfl "$dir/$file" > "out/$dir/${file%.*}.in"
+    ml2hfl "$dir/$file" > "out/$dir/${file%.*}.in" 2> /dev/null
     if [ $? -ne 0 ]; then
       echo "$dir/$file failed"
     fi
