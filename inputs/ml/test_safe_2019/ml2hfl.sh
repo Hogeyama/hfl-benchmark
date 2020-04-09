@@ -4,11 +4,13 @@ if [ -d $1 ]; then
   mkdir -p out/$1
   for file in `ls $1 | grep -E '\.ml$'`; do
     # echo "### $file"
-    ret=$(ml2hfl "$dir/$file" 2> /dev/null)
+    tmp=$(mktemp)
+    ml2hfl "$dir/$file" > $tmp 2> /dev/null
     if [ $? -ne 0 ]; then
       echo "$dir/$file failed"
+      rm $tmp
     else
-      echo "$ret" > "out/$dir/${file%.*}.in"
+      mv $tmp "out/$dir/${file%.*}.in"
     fi
   done
 else
