@@ -27,11 +27,14 @@ module Util = struct
 end
 
 type file_type = HFL | ML | HOCHC
-let file_type_of_string = function
-  | "hfl"   -> Result.Ok HFL
-  | "ml"    -> Result.Ok ML
-  | "hochc" -> Result.Ok HOCHC
-  | s       -> Result.Error (`Msg ("Unknown file_type: " ^ s))
+let file_type_of_string =
+  let ok x  = `Ok x in
+  let err e = `Error e in
+  function
+  | "hfl"   -> ok HFL
+  | "ml"    -> ok ML
+  | "hochc" -> ok HOCHC
+  | s       -> err ("Unknown file_type: " ^ s)
 let pp_file_type ppf = function
   | HFL   -> Fmt.string ppf "hfl"
   | ML    -> Fmt.string ppf "ml"

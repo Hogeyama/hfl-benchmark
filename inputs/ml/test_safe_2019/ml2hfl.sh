@@ -4,16 +4,13 @@ if [ -d $1 ]; then
   mkdir -p out/$1
   for file in `ls $1 | grep -E '\.ml$'`; do
     # echo "### $file"
-    ml2hfl "$dir/$file" > "out/$dir/${file%.*}.in" 2> /dev/null
+    ret=$(ml2hfl "$dir/$file" 2> /dev/null)
     if [ $? -ne 0 ]; then
       echo "$dir/$file failed"
+    else
+      echo "$ret" > "out/$dir/${file%.*}.in"
     fi
   done
-elif [ -f $1 ]; then
-  dir=${1%/*}
-  file=${1##*/}
-  mkdir -p out/$dir
-  ml2hfl "$dir/$file" > "out/$dir/${file%.*}.in" || echo "failed."
 else
   echo "$dir is not directory"
   exit 1
