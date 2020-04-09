@@ -11,5 +11,5 @@ let rec length = function
   | [] -> 0
   | _::l -> 1 + length l
 
-let main l = assert (length l = length (insert_sort l))
+let main (l : int list) = assert (length l = length (insert_sort l))
 
