@@ -45,5 +45,7 @@ LOOPSHIFT plen slen pat i j_16 shiftArray1 k_kmpMatch_loopShift =v
                               (\x_225.LOOPSHIFT plen slen pat x_225 (j_16 + 1) shiftArray1 k_kmpMatch_loopShift)))))).
 MAKE_ARRAY n_22 s_21 i_20 k_make_array =v
   ((0 > i_20 \/ i_20 >= n_22) \/ k_make_array s_21) /\ (0 <= i_20 /\ i_20 < n_22 \/ FAIL_142 true (\x_363.true)).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

@@ -16,5 +16,7 @@ MAIN_9  =v
                 /\ (arg1_98 >= arg3_93
                     \/ (arg3_93 != arg3_93 \/ true) /\ (arg3_93 = arg3_93 \/ FAIL_42 true (\x_64.true))))).
 FAIL_42 u_43 k_44 =v false.
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

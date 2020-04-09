@@ -15,5 +15,7 @@ F set_flag_app_130_8 s_app_i_119_7 s_app_h_EXPARAM_120_6 s_app_v_122_5 x_4 k_f =
        (\x_38284.k_f (APP_WITHOUT_CHECKING_158 true 0 0 0 x_38284 true 0 0 0 0 true 0 0 0 F true 0 0 0 (x_4 - 1))))
   /\ (x_4 > 0 \/ k_f (\x_38325.\x_38326.\x_38327.\x_38328.\x_38329.\k_g_38330.k_g_38330 true)).
 FAIL_38143 u_38144 k_38145 =v false.
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

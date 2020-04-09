@@ -6,5 +6,7 @@ G e a j k_g =v
    \/ ((0 > j \/ j >= e) \/ G e (\j_43.\k_update_44.k_update_44 0) (j + 1) k_g)
       /\ (0 <= j /\ j < e \/ FAIL_16 true (\x_32.true)))
   /\ (j < e \/ k_g true).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

@@ -7,5 +7,7 @@ MAP x_6 k_map =v (x_6 != 0 \/ k_map 0) /\ (x_6 = 0 \/ MAP (x_6 - 1) (\x_71.k_map
 ZIP x_8 y k_zip =v
   (x_8 != 0 \/ (y != 0 \/ k_zip 0) /\ (y = 0 \/ true))
   /\ (x_8 = 0 \/ (y != 0 \/ true) /\ (y = 0 \/ ZIP (x_8 - 1) (y - 1) (\x_75.k_zip (1 + x_75)))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

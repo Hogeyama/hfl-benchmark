@@ -17,5 +17,7 @@ FOLDR_WITHOUT_CHECKING_131 x_35 x_34 x_33 x_32 h_EXPARAM_92_31 x_30 x_29 x_28 x_
           \/ FOLDR_WITHOUT_CHECKING_131 true 0 0 0 0 true 0 0 0 h_26 true 0 0 0 0 true 0 0 0 (l_16 - 1)
               (\x_11759.Forall (\x_11707.h_26 true 0 0 0 x_11707 true 0 0 0 x_11759 k_foldr_without_checking_131)))
          /\ (l_16 > l_16 - 1 /\ l_16 - 1 >= 0 \/ FAIL_11639 true (\x_11793.true))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

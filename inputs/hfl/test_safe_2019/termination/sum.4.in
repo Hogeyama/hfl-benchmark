@@ -7,5 +7,7 @@ SUM_WITHOUT_CHECKING_44 x_7 x_6 n_5 k_sum_without_checking_44 =v
       \/ ((n_5 <= n_5 - 1 \/ n_5 - 1 < 0)
           \/ SUM_WITHOUT_CHECKING_44 true 0 (n_5 - 1) (\x_1648.k_sum_without_checking_44 (n_5 + x_1648)))
          /\ (n_5 > n_5 - 1 /\ n_5 - 1 >= 0 \/ FAIL_1625 true (\x_1654.true))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

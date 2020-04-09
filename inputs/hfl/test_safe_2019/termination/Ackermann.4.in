@@ -12,5 +12,7 @@ ACK_WITHOUT_CHECKING_93 x_15 x_14 x_13 m_12 x_11 x_10 x_9 n_8 k_ack_without_chec
                      (\x_4959.ACK_WITHOUT_CHECKING_93 true 0 0 (m_12 - 1) true 0 0 x_4959 k_ack_without_checking_93))
                 /\ (n_8 > n_8 - 1 /\ n_8 - 1 >= 0 \/ FAIL_4887 true (\x_4988.true)))).
 FAIL_4887 u_4888 k_4889 =v false.
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

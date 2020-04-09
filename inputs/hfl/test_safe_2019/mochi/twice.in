@@ -3,5 +3,7 @@ MAIN_9  =v
   (arg1_44 <= 0 \/ (2 * (2 * arg1_44) <= arg1_44 \/ true) /\ (2 * (2 * arg1_44) > arg1_44 \/ FAIL_21 true (\x_31.true)))
   /\ (arg1_44 > 0 \/ true).
 FAIL_21 u_22 k_23 =v false.
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

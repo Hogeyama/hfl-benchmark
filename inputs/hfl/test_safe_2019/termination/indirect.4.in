@@ -5,5 +5,7 @@ F_WITHOUT_CHECKING_190 x_8 x_7 x_6 k_f_without_checking_190 =v
   k_f_without_checking_190
    (\set_flag_f_182_8839.
      \s_f_x_179_8840.\u_8841.\k_app_8842.F_WITHOUT_CHECKING_190 true 0 0 (\x_8860.x_8860 true 0 true k_app_8842)).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

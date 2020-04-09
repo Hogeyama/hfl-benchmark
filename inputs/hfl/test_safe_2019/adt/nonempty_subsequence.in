@@ -101,5 +101,7 @@ NONEMPTY_SUBSEQUENCES l0_48 l1_47 k_nonempty_subsequences_46 =v
                                         (\x_344.\k_nonempty_subsequences_345.true) x0_363 x1_364
                                         (\p0_354.\p1_355.p1_355 (i_390 - 1) k_nonempty_subsequences_391))))))))
          /\ (l0_48 > 0 \/ true)).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

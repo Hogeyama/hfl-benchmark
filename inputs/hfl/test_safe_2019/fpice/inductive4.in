@@ -5,5 +5,7 @@ MAIN_7  =v
 F g x_5 k_f =v
   (x_5 >= (-3) \/ F g (-4) k_f) /\ (x_5 < (-3) \/ (x_5 > 1 \/ g x_5 k_f) /\ (x_5 <= 1 \/ F (F g) (x_5 - 2) k_f)).
 FAIL_17 u_18 k_19 =v false.
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

@@ -9,5 +9,7 @@ MC91_WITHOUT_CHECKING_48 x_7 x_6 n_5 k_mc91_without_checking_48 =v
             ((111 + (0 - n_5) <= 111 + (0 - x_2895) \/ 111 + (0 - x_2895) < 0)
              \/ MC91_WITHOUT_CHECKING_48 true 0 x_2895 k_mc91_without_checking_48)
             /\ (111 + (0 - n_5) > 111 + (0 - x_2895) /\ 111 + (0 - x_2895) >= 0 \/ FAIL_2867 true (\x_2899.true)))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

@@ -23,5 +23,7 @@ REPLICATE x_8 n k_replicate_7 =v
                 \k_replicate_132.
                  (i_131 != 0 \/ k_replicate_132 x_8)
                  /\ (i_131 = 0 \/ REPLICATE x_8 (n - 1) (\p0_118.\p1_119.p1_119 (i_131 - 1) k_replicate_132))))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

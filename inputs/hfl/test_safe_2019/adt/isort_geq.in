@@ -64,5 +64,7 @@ MAKE_LIST n_15 k_make_list_14 =v
                    \k_make_list_286.
                     (i_285 != 0 \/ k_make_list_286 n_368)
                     /\ (i_285 = 0 \/ MAKE_LIST (n_15 - 1) (\p0_246.\p1_247.p1_247 (i_285 - 1) k_make_list_286)))))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

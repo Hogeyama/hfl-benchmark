@@ -10,5 +10,7 @@ ZIP_WITHOUT_CHECKING_71 x_13 x_12 x_11 xs_10 x_9 x_8 x_7 ys_6 k_zip_without_chec
                  \/ ZIP_WITHOUT_CHECKING_71 true 0 0 (xs_10 - 1) true 0 0 (ys_6 - 1)
                      (\x_3847.k_zip_without_checking_71 (1 + x_3847)))
                 /\ (xs_10 > xs_10 - 1 /\ xs_10 - 1 >= 0 \/ FAIL_3762 true (\x_3827.true)))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

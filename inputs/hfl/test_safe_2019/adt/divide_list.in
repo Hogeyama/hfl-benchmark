@@ -69,5 +69,7 @@ MAKE_INTLIST x_13 k_main_arg1_make_intlist_12 =v
                        (i_480 != 0 \/ k_main_arg1_make_intlist_481 0)
                        /\ (i_480 = 0
                            \/ MAKE_INTLIST true (\p0_452.\p1_453.p1_453 (i_480 - 1) k_main_arg1_make_intlist_481))))))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

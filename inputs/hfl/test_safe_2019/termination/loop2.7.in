@@ -12,5 +12,7 @@ F_WITHOUT_CHECKING_86 x_13 x_12 x_11 m_10 x_9 x_8 x_7 n_6 k_f_without_checking_8
                 /\ ((m_10 > m_10 /\ m_10 >= 0 \/ m_10 >= m_10 /\ (n_6 > n_6 - 1 /\ n_6 - 1 >= 0))
                     \/ FAIL_9046 true (\x_9152.true)))
             /\ (r_9137 <= 0 /\ n_6 > 0 \/ k_f_without_checking_86 true))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

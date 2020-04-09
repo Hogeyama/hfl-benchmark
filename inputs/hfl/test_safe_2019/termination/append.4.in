@@ -8,5 +8,7 @@ APPEND_WITHOUT_CHECKING_62 x_13 x_12 x_11 xs_10 x_9 x_8 x_7 ys_6 k_append_withou
               (\x_3659.k_append_without_checking_62 (1 + x_3659)))
          /\ (xs_10 > xs_10 - 1 /\ xs_10 - 1 >= 0 \/ FAIL_3607 true (\x_3681.true))).
 FAIL_3607 u_3608 k_3609 =v false.
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

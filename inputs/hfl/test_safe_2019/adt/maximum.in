@@ -37,5 +37,7 @@ MAXIMUM x0_22 x1_21 k_maximum =v
                     \/ MAXIMUM (x0_22 - 1) (\x_173.\k_maximum_l_174.x1_21 (x_173 + 1) k_maximum_l_174)
                         (\y_130.k_maximum true))
                    /\ (x0_22 > 0 \/ true)))).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

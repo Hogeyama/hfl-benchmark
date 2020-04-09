@@ -10,5 +10,7 @@ APPEND x_9 y k_append =v (x_9 != 0 \/ k_append y) /\ (x_9 = 0 \/ APPEND (x_9 - 1
 FAIL_38 u_39 k_40 =v false.
 FAIL_41 u_42 k_43 =v false.
 REV n k_rev =v (n != 0 \/ k_rev 0) /\ (n = 0 \/ REV (n - 1) (\x_86.APPEND x_86 1 k_rev)).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

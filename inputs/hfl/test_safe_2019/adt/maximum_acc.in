@@ -46,5 +46,7 @@ MAXIMUM_ACC x_23 x0_22 x1_21 k_maximum_acc =v
                 MAXIMUM_ACC true (x0_22 - 1) (\x_176.\k_maximum_acc_l_177.x1_21 (x_176 + 1) k_maximum_acc_l_177)
                  k_maximum_acc))
          /\ (x0_22 > 0 \/ true)).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).

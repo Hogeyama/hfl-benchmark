@@ -11,5 +11,7 @@ LOOP2_WITHOUT_CHECKING_82 x_8 x_7 n2_6 k_loop2_without_checking_82 =v
           \/ LOOP2_WITHOUT_CHECKING_82 true 0 (n2_6 - 1) (\x_5807.k_loop2_without_checking_82 (x_5817 + x_5807)))
          /\ (n2_6 > n2_6 - 1 /\ n2_6 - 1 >= 0 \/ FAIL_5788 true (\x_5823.true))))
   /\ (n2_6 > 0 \/ k_loop2_without_checking_82 0).
-Forall p      =v ForallAux p 0.
-ForallAux p x =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Forall p        =v ForallAux p 0.
+ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
+Exists p        =v ExistsAux 1000 0 p.
+ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
