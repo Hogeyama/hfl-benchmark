@@ -1,21 +1,12 @@
 %HES
-MAIN_13  =v
-  ((arg1_58 > arg2_56 \/ arg1_58 <= 0)
-   \/ BCOPY_AUX arg1_58
-       (\i_74.
-         \k_make_array_75.
-          ((0 > i_74 \/ i_74 >= arg1_58) \/ k_make_array_75 0)
-          /\ (0 <= i_74 /\ i_74 < arg1_58 \/ FAIL_34 true (\x_65.true)))
-       (\i_74.
-         \k_make_array_75.
-          ((0 > i_74 \/ i_74 >= arg2_56) \/ k_make_array_75 0)
-          /\ (0 <= i_74 /\ i_74 < arg2_56 \/ FAIL_34 true (\x_65.true)))
-       0 (\main_40.true))
-  /\ (arg1_58 <= arg2_56 /\ arg1_58 > 0 \/ true).
+MAIN  =v
+  (arg1 > arg2 \/ arg1 <= 0)
+  \/ BCOPY_AUX arg1 (\i_10.\k_make_array.((0 > i_10 \/ i_10 >= arg1) \/ k_make_array 0) /\ (0 <= i_10 /\ i_10 < arg1))
+      (\i_10.\k_make_array.((0 > i_10 \/ i_10 >= arg2) \/ k_make_array 0) /\ (0 <= i_10 /\ i_10 < arg2)) 0 (
+      \main.true).
 BCOPY_AUX m_6 src des i k_bcopy_aux =v
-  (i < m_6 \/ k_bcopy_aux true) /\ (i >= m_6 \/ src i (\x_46.des i (\u_53.BCOPY_AUX m_6 src des (i + 1) k_bcopy_aux))).
-FAIL_34 u_35 k_36 =v false.
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+  (i < m_6 \/ k_bcopy_aux true) /\ (i >= m_6 \/ src i (\x.des i (\u.BCOPY_AUX m_6 src des (i + 1) k_bcopy_aux))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

@@ -1,63 +1,55 @@
 %HES
-MAIN_40  =v
-  CLONE_38 arg2_299 0 0 arg2_299
-   (\x0_172.
-     \x1_173.
-      CLONE arg2_299 0 x0_172 x1_173 arg2_299
-       (\x0_288.
-         \x1_289.
-          MAP
-           (\x0_325.
-             \x1_326.
-              \k_head_327.
-               (x0_325 > 0 \/ FAIL_140 true (\x_313.true))
-               /\ (x0_325 <= 0 \/ (x0_325 <= 0 \/ x1_326 0 k_head_327) /\ (x0_325 > 0 \/ true)))
-           x0_288 x1_289 (\main0_167.\main1_168.true))).
-CLONE n x_39 x0_26 x1_25 m k_clone_2d_clone_24 =v
+MAIN  =v
+  CLONE_40 arg2 0 0 arg2
+   (\x0_18.
+     \x1_17.
+      CLONE arg2 0 x0_18 x1_17 arg2
+       (\x0.
+         \x1.
+          MAP (\x0_16.\x1_15.\k_head.x0_16 > 0 /\ (x0_16 <= 0 \/ (x0_16 <= 0 \/ x1_15 0 k_head))) x0 x1
+           (\main0.\main1.true))).
+CLONE_40 n x_41 x_39 m_38 k_clone_2d_clone_37 =v
+  (m_38 <= 0
+   \/ CLONE_40 n x_41 0 (m_38 - 1)
+       (\p0_36.
+         \p1_35.
+          k_clone_2d_clone_37 (1 + p0_36)
+           (\i_34.
+             \k_clone_2d_clone_33.
+              (i_34 != 0 \/ k_clone_2d_clone_33 0)
+              /\ (i_34 = 0 \/ CLONE_40 n x_41 0 (m_38 - 1) (\p0_32.\p1_31.p1_31 (i_34 - 1) k_clone_2d_clone_33)))))
+  /\ (m_38 > 0 \/ k_clone_2d_clone_37 0 (\x_30.\k_clone_2d_clone_29.true)).
+CLONE n x_41 x0_28 x1_27 m k_clone_2d_clone_26 =v
   (m <= 0
-   \/ CLONE n x_39 x0_26 x1_25 (m - 1)
-       (\p0_193.
-         \p1_194.
-          k_clone_2d_clone_24 (1 + p0_193)
-           (\i_229.
-             \k_clone_2d_clone_230.
-              (i_229 != 0 \/ k_clone_2d_clone_230 x0_26 x1_25)
-              /\ (i_229 = 0
-                  \/ CLONE n x_39 x0_26 x1_25 (m - 1) (\p0_247.\p1_248.p1_248 (i_229 - 1) k_clone_2d_clone_230)))))
-  /\ (m > 0 \/ k_clone_2d_clone_24 0 (\x_199.\k_clone_2d_clone_200.true)).
-CLONE_38 n x_39 x_37 m_36 k_clone_2d_clone_35 =v
-  (m_36 <= 0
-   \/ CLONE_38 n x_39 0 (m_36 - 1)
-       (\p0_179.
-         \p1_180.
-          k_clone_2d_clone_35 (1 + p0_179)
-           (\i_213.
-             \k_clone_2d_clone_214.
-              (i_213 != 0 \/ k_clone_2d_clone_214 0)
-              /\ (i_213 = 0 \/ CLONE_38 n x_39 0 (m_36 - 1) (\p0_238.\p1_239.p1_239 (i_213 - 1) k_clone_2d_clone_214)))))
-  /\ (m_36 > 0 \/ k_clone_2d_clone_35 0 (\x_185.\k_clone_2d_clone_186.true)).
-FAIL_140 u_141 k_142 =v false.
-MAP f x0_11 x1_10 k_map_9 =v
-  (x0_11 > 0 \/ k_map_9 0 (\x_317.\k_map_318.true))
-  /\ (x0_11 <= 0
-      \/ (x0_11 <= 0
-          \/ x1_10 0
-              (\x0_323.
-                \x1_324.
-                 f x0_323 x1_324
-                  (\r_f_296.
-                    MAP f (x0_11 - 1) (\x_310.\k_map_l_311.x1_10 (x_310 + 1) k_map_l_311)
-                     (\p0_283.
-                       \p1_284.
-                        k_map_9 (1 + p0_283)
-                         (\i_274.
-                           \k_map_275.
-                            (i_274 != 0 \/ k_map_275 0)
-                            /\ (i_274 = 0
-                                \/ MAP f (x0_11 - 1) (\x_310.\k_map_l_311.x1_10 (x_310 + 1) k_map_l_311)
-                                    (\p0_256.\p1_257.p1_257 (i_274 - 1) k_map_275)))))))
-         /\ (x0_11 > 0 \/ true)).
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+   \/ CLONE n x_41 x0_28 x1_27 (m - 1)
+       (\p0_25.
+         \p1_24.
+          k_clone_2d_clone_26 (1 + p0_25)
+           (\i_23.
+             \k_clone_2d_clone_22.
+              (i_23 != 0 \/ k_clone_2d_clone_22 x0_28 x1_27)
+              /\ (i_23 = 0 \/ CLONE n x_41 x0_28 x1_27 (m - 1) (\p0_21.\p1_20.p1_20 (i_23 - 1) k_clone_2d_clone_22)))))
+  /\ (m > 0 \/ k_clone_2d_clone_26 0 (\x_19.\k_clone_2d_clone.true)).
+MAP f x0_13 x1_12 k_map_11 =v
+  (x0_13 > 0 \/ k_map_11 0 (\x_10.\k_map_9.true))
+  /\ (x0_13 <= 0
+      \/ (x0_13 <= 0
+          \/ x1_12 0
+              (\x0_8.
+                \x1_7.
+                 f x0_8 x1_7
+                  (\r_f.
+                    MAP f (x0_13 - 1) (\x.\k_map_l.x1_12 (x + 1) k_map_l)
+                     (\p0_6.
+                       \p1_5.
+                        k_map_11 (1 + p0_6)
+                         (\i.
+                           \k_map.
+                            (i != 0 \/ k_map 0)
+                            /\ (i = 0
+                                \/ MAP f (x0_13 - 1) (\x_4.\k_map_l_3.x1_12 (x_4 + 1) k_map_l_3)
+                                    (\p0.\p1.p1 (i - 1) k_map)))))))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

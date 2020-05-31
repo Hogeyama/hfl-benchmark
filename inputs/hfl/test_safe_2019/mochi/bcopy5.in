@@ -1,29 +1,19 @@
 %HES
-MAIN_16  =v
-  ((arg1_104 != 0 \/ arg2_102 > arg3_99)
-   \/ BCOPY_AUX arg2_102
-       (\i_122.
-         \k_make_array_123.
-          ((0 > i_122 \/ i_122 >= arg2_102) \/ k_make_array_123 0)
-          /\ (0 <= i_122 /\ i_122 < arg2_102 \/ FAIL_52 true (\x_111.true)))
-       (\i_122.
-         \k_make_array_123.
-          ((0 > i_122 \/ i_122 >= arg3_99) \/ k_make_array_123 0)
-          /\ (0 <= i_122 /\ i_122 < arg3_99 \/ FAIL_52 true (\x_111.true)))
-       arg1_104 (\main_61.true))
-  /\ (arg1_104 = 0 /\ arg2_102 <= arg3_99 \/ true).
-BCOPY_AUX m_9 src des i_8 k_bcopy_aux =v
-  (i_8 < m_9 \/ k_bcopy_aux true)
-  /\ (i_8 >= m_9
-      \/ src i_8
-          (\x_67.
-            des i_8
-             (\u_74.
-               BCOPY_AUX m_9 src
-                (\j_94.\k_update_95.(i_8 != j_94 \/ k_update_95 0) /\ (i_8 = j_94 \/ des j_94 k_update_95)) (
-                i_8 + 1) k_bcopy_aux))).
-FAIL_52 u_53 k_54 =v false.
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+MAIN  =v
+  (arg1 != 0 \/ arg2 > arg3)
+  \/ BCOPY_AUX arg2 (\i_12.\k_make_array.((0 > i_12 \/ i_12 >= arg2) \/ k_make_array 0) /\ (0 <= i_12 /\ i_12 < arg2))
+      (\i_12.\k_make_array.((0 > i_12 \/ i_12 >= arg3) \/ k_make_array 0) /\ (0 <= i_12 /\ i_12 < arg3)) arg1
+      (\main.true).
+BCOPY_AUX m_8 src des i_7 k_bcopy_aux =v
+  (i_7 < m_8 \/ k_bcopy_aux true)
+  /\ (i_7 >= m_8
+      \/ src i_7
+          (\x.
+            des i_7
+             (\u.
+               BCOPY_AUX m_8 src (\j.\k_update.(i_7 != j \/ k_update 0) /\ (i_7 = j \/ des j k_update)) (i_7 + 1)
+                k_bcopy_aux))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

@@ -1,9 +1,7 @@
 %HES
-MAIN_8  =v
-  COPY arg1_46 (\x_44.COPY x_44 (\x_41.(x_41 != arg1_46 \/ true) /\ (x_41 = arg1_46 \/ FAIL_22 true (\x_33.true)))).
-COPY x_6 k_copy =v (x_6 != 0 \/ k_copy 0) /\ (x_6 = 0 \/ COPY (x_6 - 1) (\x_29.k_copy (1 + x_29))).
-FAIL_22 u_23 k_24 =v false.
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+MAIN  =v COPY arg1 (\x_2.COPY x_2 (\x_1.x_1 = arg1)).
+COPY x_6 k_copy =v (x_6 != 0 \/ k_copy 0) /\ (x_6 = 0 \/ COPY (x_6 - 1) (\x_5.k_copy (1 + x_5))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

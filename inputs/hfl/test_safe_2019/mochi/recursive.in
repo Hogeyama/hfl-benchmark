@@ -1,10 +1,7 @@
 %HES
-MAIN_8  =v
-  F (\x_39.\k_succ_40.k_succ_40 (x_39 + 1)) arg1_37
-   (\x_32.(x_32 < 0 \/ true) /\ (x_32 >= 0 \/ FAIL_18 true (\x_29.true))).
-F g x_6 k_f =v (x_6 < 0 \/ g x_6 k_f) /\ (x_6 >= 0 \/ g x_6 (\x_26.F (F g) x_26 k_f)).
-FAIL_18 u_19 k_20 =v false.
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+MAIN  =v F (\x_4.\k_succ.k_succ (x_4 + 1)) arg1 (\x_1.x_1 >= 0).
+F g x_6 k_f =v (x_6 < 0 \/ g x_6 k_f) /\ (x_6 >= 0 \/ g x_6 (\x_5.F (F g) x_5 k_f)).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

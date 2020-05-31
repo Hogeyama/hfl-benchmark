@@ -1,31 +1,21 @@
 %HES
-MAIN_19  =v
-  (arg1_111 <= 0
-   \/ BCOPY arg1_111 arg1_111
-       (\i_131.
-         \k_make_array_132.
-          ((0 > i_131 \/ i_131 >= arg1_111) \/ k_make_array_132 0)
-          /\ (0 <= i_131 /\ i_131 < arg1_111 \/ FAIL_59 true (\x_124.true)))
-       (\i_131.
-         \k_make_array_132.
-          ((0 > i_131 \/ i_131 >= arg1_111) \/ k_make_array_132 0)
-          /\ (0 <= i_131 /\ i_131 < arg1_111 \/ FAIL_59 true (\x_124.true)))
-       0 (\array_77.PRINT_ARRAY arg1_111 arg1_111 array_77 0 (\main_67.true)))
-  /\ (arg1_111 > 0 \/ true).
-BCOPY m_12 m_9 src des_8 i_7 k_f_bcopy =v
-  (i_7 < m_9 \/ k_f_bcopy des_8)
-  /\ (i_7 >= m_9
+MAIN  =v
+  arg1 <= 0
+  \/ BCOPY arg1 arg1 (\i_15.\k_make_array.((0 > i_15 \/ i_15 >= arg1) \/ k_make_array 0) /\ (0 <= i_15 /\ i_15 < arg1))
+      (\i_15.\k_make_array.((0 > i_15 \/ i_15 >= arg1) \/ k_make_array 0) /\ (0 <= i_15 /\ i_15 < arg1)) 0
+      (\array.PRINT_ARRAY arg1 arg1 array 0 (\main.true)).
+BCOPY m_11 m_8 src des i_7 k_f_bcopy =v
+  (i_7 < m_8 \/ k_f_bcopy des)
+  /\ (i_7 >= m_8
       \/ src i_7
-          (\x_74.
-            des_8 i_7
-             (\u_85.
-               BCOPY m_12 m_9 src
-                (\j_108.\k_update_109.(i_7 != j_108 \/ k_update_109 0) /\ (i_7 = j_108 \/ des_8 j_108 k_update_109))
-                (i_7 + 1) k_f_bcopy))).
-FAIL_59 u_60 k_61 =v false.
-PRINT_ARRAY m_12 m array_5 i k_f_print_array =v
-  (i < m \/ k_f_print_array true) /\ (i >= m \/ array_5 i (\u_121.PRINT_ARRAY m_12 m array_5 (i + 1) k_f_print_array)).
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+          (\x.
+            des i_7
+             (\u_6.
+               BCOPY m_11 m_8 src (\j.\k_update.(i_7 != j \/ k_update 0) /\ (i_7 = j \/ des j k_update)) (i_7 + 1)
+                k_f_bcopy))).
+PRINT_ARRAY m_11 m array_5 i k_f_print_array =v
+  (i < m \/ k_f_print_array true) /\ (i >= m \/ array_5 i (\u.PRINT_ARRAY m_11 m array_5 (i + 1) k_f_print_array)).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

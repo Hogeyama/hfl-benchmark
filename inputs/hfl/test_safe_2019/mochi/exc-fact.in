@@ -1,13 +1,11 @@
 %HES
-MAIN_12  =v (arg1_41 <= 0 \/ FACT arg1_41 EXN (\u_39.true)) /\ (arg1_41 > 0 \/ true).
-EXN n_5 k_exn =v false.
+MAIN  =v arg1 <= 0 \/ FACT arg1 (\n_5.\k_exn.false) (\u.true).
 FACT n_10 exn_9 k_fact =v
   (n_10 > 0 \/ exn_9 0 k_fact)
   /\ (n_10 <= 0
-      \/ FACT (n_10 - 1)
-          (\n_29.\k_fact_exn_30.(n_29 != 0 \/ k_fact_exn_30 1) /\ (n_29 = 0 \/ exn_9 n_29 k_fact_exn_30))
-          (\x_36.k_fact (n_10 * x_36))).
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+      \/ FACT (n_10 - 1) (\n_7.\k_fact_exn.(n_7 != 0 \/ k_fact_exn 1) /\ (n_7 = 0 \/ exn_9 n_7 k_fact_exn))
+          (\x_6.k_fact (n_10 * x_6))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

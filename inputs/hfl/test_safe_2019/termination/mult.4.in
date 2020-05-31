@@ -1,14 +1,12 @@
 %HES
-MAIN_3231  =v
-  (m_3301 <= 0 \/ MULT_WITHOUT_CHECKING_63 true 0 0 m_3301 true 0 0 n_3303 (\u_3306.true)) /\ (m_3301 > 0 \/ true).
-FAIL_3278 u_3279 k_3280 =v false.
+MAIN  =v m <= 0 \/ MULT_WITHOUT_CHECKING_63 true 0 0 m true 0 0 n (\u_3229.true).
 MULT_WITHOUT_CHECKING_63 x_15 x_14 x_13 m_12 x_11 x_10 x_9 n_8 k_mult_without_checking_63 =v
   (m_12 <= 0
    \/ ((m_12 <= m_12 - 1 \/ m_12 - 1 < 0)
-       \/ MULT_WITHOUT_CHECKING_63 true 0 0 (m_12 - 1) true 0 0 n_8 (\x_3326.k_mult_without_checking_63 (n_8 + x_3326)))
-      /\ (m_12 > m_12 - 1 /\ m_12 - 1 >= 0 \/ FAIL_3278 true (\x_3335.true)))
+       \/ MULT_WITHOUT_CHECKING_63 true 0 0 (m_12 - 1) true 0 0 n_8 (\x_7.k_mult_without_checking_63 (n_8 + x_7)))
+      /\ (m_12 > m_12 - 1 /\ m_12 - 1 >= 0))
   /\ (m_12 > 0 \/ k_mult_without_checking_63 0).
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

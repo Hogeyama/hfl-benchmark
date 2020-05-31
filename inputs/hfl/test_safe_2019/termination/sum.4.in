@@ -1,13 +1,12 @@
 %HES
-MAIN_1605  =v SUM_WITHOUT_CHECKING_44 true 0 x_1650 (\u_1638.true).
-FAIL_1625 u_1626 k_1627 =v false.
+MAIN  =v SUM_WITHOUT_CHECKING_44 true 0 x (\u_1603.true).
 SUM_WITHOUT_CHECKING_44 x_7 x_6 n_5 k_sum_without_checking_44 =v
   (n_5 > 0 \/ k_sum_without_checking_44 0)
   /\ (n_5 <= 0
       \/ ((n_5 <= n_5 - 1 \/ n_5 - 1 < 0)
-          \/ SUM_WITHOUT_CHECKING_44 true 0 (n_5 - 1) (\x_1648.k_sum_without_checking_44 (n_5 + x_1648)))
-         /\ (n_5 > n_5 - 1 /\ n_5 - 1 >= 0 \/ FAIL_1625 true (\x_1654.true))).
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+          \/ SUM_WITHOUT_CHECKING_44 true 0 (n_5 - 1) (\x_4.k_sum_without_checking_44 (n_5 + x_4)))
+         /\ (n_5 > n_5 - 1 /\ n_5 - 1 >= 0)).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

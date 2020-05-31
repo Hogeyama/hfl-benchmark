@@ -1,18 +1,15 @@
 %HES
-MAIN_14  =v
-  ((arg1_76 <= 0 \/ (arg2_66 < 0 \/ arg2_66 > 0))
-   \/ ARRAY_MAX arg1_76 arg2_66 (\i_85.\k_make_array_86.k_make_array_86 (arg1_76 - i_85)) (-1)
-       (\m_74.(m_74 < arg1_76 \/ true) /\ (m_74 >= arg1_76 \/ FAIL_40 true (\x_63.true))))
-  /\ (arg1_76 > 0 /\ (arg2_66 >= 0 /\ arg2_66 <= 0) \/ true).
+MAIN  =v
+  (arg1 <= 0 \/ (arg2 < 0 \/ arg2 > 0))
+  \/ ARRAY_MAX arg1 arg2 (\i_11.\k_make_array.k_make_array (arg1 - i_11)) (-1) (\m.m >= arg1).
 ARRAY_MAX n_10 i_9 a m_8 k_array_max =v
   (i_9 < n_10 \/ k_array_max m_8)
   /\ (i_9 >= n_10
       \/ a i_9
-          (\x_52.
-            (x_52 <= m_8 \/ ARRAY_MAX n_10 (i_9 + 1) a x_52 k_array_max)
-            /\ (x_52 > m_8 \/ ARRAY_MAX n_10 (i_9 + 1) a m_8 k_array_max))).
-FAIL_40 u_41 k_42 =v false.
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+          (\x_7.
+            (x_7 <= m_8 \/ ARRAY_MAX n_10 (i_9 + 1) a x_7 k_array_max)
+            /\ (x_7 > m_8 \/ ARRAY_MAX n_10 (i_9 + 1) a m_8 k_array_max))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).

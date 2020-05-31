@@ -1,102 +1,89 @@
 %HES
-MAIN_61  =v
+MAIN  =v
   MAKE_INTLIST true
-   (\arg10_528.
-     \arg11_529.
-      GROUP arg10_528 arg11_529
-       (\x0_474.
-         \x1_475.
-          MAP
-           (\x0_239.
-             \x1_240.
-              \k_assert_nonempty_241.
-               (x0_239 > 0 \/ FAIL_232 true (\x_275.true)) /\ (x0_239 <= 0 \/ k_assert_nonempty_241 true))
-           x0_474 x1_475 (\main0_272.\main1_273.true))).
-FAIL_232 u_233 k_234 =v false.
-GROUP xs0_37 xs1_36 k_group_35 =v
-  (xs0_37 > 0 \/ k_group_35 0 (\x_521.\k_group_522.true))
-  /\ (xs0_37 <= 0
-      \/ (xs0_37 <= 0
-          \/ xs1_36 0
-              (\x_526.
-                SPAN_EQ x_526 (1 + (xs0_37 - 1))
-                 (\i_404.
-                   \k_group_r_span_eq_405.
-                    (i_404 != 0 \/ k_group_r_span_eq_405 x_526)
-                    /\ (i_404 = 0 \/ xs1_36 ((i_404 - 1) + 1) k_group_r_span_eq_405))
-                 (\r_span_eq00_416.
-                   \r_span_eq01_417.
-                    \r_span_eq10_418.
-                     \r_span_eq11_419.
-                      GROUP r_span_eq10_418 r_span_eq11_419
-                       (\p0_327.
-                         \p1_328.
-                          k_group_35 (1 + p0_327)
-                           (\i_307.
-                             \k_group_308.
-                              (i_307 != 0
-                               \/ k_group_308 (1 + r_span_eq00_416) (\i_369.\k_group_n__f_370.k_group_n__f_370 0))
-                              /\ (i_307 = 0
-                                  \/ GROUP r_span_eq10_418 r_span_eq11_419
-                                      (\p0_285.\p1_286.p1_286 (i_307 - 1) k_group_308)))))))
-         /\ (xs0_37 > 0 \/ true)).
+   (\arg10.
+     \arg11.
+      GROUP arg10 arg11
+       (\x0.
+         \x1.
+          MAP (\x0_25.\x1_24.\k_assert_nonempty.x0_25 > 0 /\ (x0_25 <= 0 \/ k_assert_nonempty true)) x0 x1
+           (\main0.\main1.true))).
+SPAN_EQ p xs0_54 xs1_53 k_span_eq_52 =v
+  (xs0_54 > 0 \/ k_span_eq_52 0 (\x_49.\k_span_eq_48.true) 0 (\x_51.\k_span_eq_50.true))
+  /\ (xs0_54 <= 0
+      \/ xs1_53 0
+          (\n_47.
+            ((xs0_54 <= 0 \/ p != n_47)
+             \/ SPAN_EQ p (xs0_54 - 1) (\x_40.\k_span_eq_xs_.xs1_53 (x_40 + 1) k_span_eq_xs_)
+                 (\r_span_eq00_46.
+                   \r_span_eq01_45.
+                    \r_span_eq10_44.
+                     \r_span_eq11_43.
+                      k_span_eq_52 (1 + r_span_eq00_46) (\i_42.\k_span_eq_41.k_span_eq_41 0) r_span_eq10_44
+                       r_span_eq11_43))
+            /\ (xs0_54 > 0 /\ p = n_47
+                \/ (xs0_54 <= 0
+                    \/ k_span_eq_52 0 (\x_37.\k_span_eq.true) (1 + (xs0_54 - 1))
+                        (\i_39.
+                          \k_span_eq_38.
+                           (i_39 != 0 \/ k_span_eq_38 n_47) /\ (i_39 = 0 \/ xs1_53 ((i_39 - 1) + 1) k_span_eq_38)))))).
+GROUP xs0 xs1 k_group_36 =v
+  (xs0 > 0 \/ k_group_36 0 (\x_35.\k_group_34.true))
+  /\ (xs0 <= 0
+      \/ (xs0 <= 0
+          \/ xs1 0
+              (\x_33.
+                SPAN_EQ x_33 (1 + (xs0 - 1))
+                 (\i_26.
+                   \k_group_r_span_eq.
+                    (i_26 != 0 \/ k_group_r_span_eq x_33) /\ (i_26 = 0 \/ xs1 ((i_26 - 1) + 1) k_group_r_span_eq))
+                 (\r_span_eq00.
+                   \r_span_eq01.
+                    \r_span_eq10.
+                     \r_span_eq11.
+                      GROUP r_span_eq10 r_span_eq11
+                       (\p0_32.
+                         \p1_31.
+                          k_group_36 (1 + p0_32)
+                           (\i_30.
+                             \k_group.
+                              (i_30 != 0 \/ k_group (1 + r_span_eq00) (\i_29.\k_group_n__f.k_group_n__f 0))
+                              /\ (i_30 = 0 \/ GROUP r_span_eq10 r_span_eq11 (\p0_28.\p1_27.p1_27 (i_30 - 1) k_group)))))))).
+MAP f x0_22 x1_21 k_map_20 =v
+  (x0_22 > 0 \/ k_map_20 0 (\x_19.\k_map_18.true))
+  /\ (x0_22 <= 0
+      \/ (x0_22 <= 0
+          \/ x1_21 0
+              (\x0_17.
+                \x1_16.
+                 f x0_17 x1_16
+                  (\r_f.
+                    MAP f (x0_22 - 1) (\x_8.\k_map_l.x1_21 (x_8 + 1) k_map_l)
+                     (\p0_15.
+                       \p1_14.
+                        k_map_20 (1 + p0_15)
+                         (\i_13.
+                           \k_map.
+                            (i_13 != 0 \/ k_map true)
+                            /\ (i_13 = 0
+                                \/ MAP f (x0_22 - 1) (\x_10.\k_map_l_9.x1_21 (x_10 + 1) k_map_l_9)
+                                    (\p0_12.\p1_11.p1_11 (i_13 - 1) k_map)))))))).
 MAKE_INTLIST x_7 k_main_arg1_make_intlist_6 =v
   Forall
-   (\x_532.
-     (x_532 != 0 \/ k_main_arg1_make_intlist_6 0 (\x_478.\k_main_arg1_make_intlist_479.true))
-     /\ (x_532 = 0
+   (\x_5.
+     (x_5 != 0 \/ k_main_arg1_make_intlist_6 0 (\x.\k_main_arg1_make_intlist_4.true))
+     /\ (x_5 = 0
          \/ Forall
-             (\n_483.
+             (\n.
                MAKE_INTLIST true
-                (\p0_424.
-                  \p1_425.
-                   k_main_arg1_make_intlist_6 (1 + p0_424)
-                    (\i_381.
-                      \k_main_arg1_make_intlist_382.
-                       (i_381 != 0 \/ k_main_arg1_make_intlist_382 n_483)
-                       /\ (i_381 = 0
-                           \/ MAKE_INTLIST true (\p0_335.\p1_336.p1_336 (i_381 - 1) k_main_arg1_make_intlist_382))))))).
-MAP f x0_20 x1_19 k_map_18 =v
-  (x0_20 > 0 \/ k_map_18 0 (\x_537.\k_map_538.true))
-  /\ (x0_20 <= 0
-      \/ (x0_20 <= 0
-          \/ x1_19 0
-              (\x0_543.
-                \x1_544.
-                 f x0_543 x1_544
-                  (\r_f_432.
-                    MAP f (x0_20 - 1) (\x_494.\k_map_l_495.x1_19 (x_494 + 1) k_map_l_495)
-                     (\p0_390.
-                       \p1_391.
-                        k_map_18 (1 + p0_390)
-                         (\i_353.
-                           \k_map_354.
-                            (i_353 != 0 \/ k_map_354 true)
-                            /\ (i_353 = 0
-                                \/ MAP f (x0_20 - 1) (\x_494.\k_map_l_495.x1_19 (x_494 + 1) k_map_l_495)
-                                    (\p0_316.\p1_317.p1_317 (i_353 - 1) k_map_354)))))))
-         /\ (x0_20 > 0 \/ true)).
-SPAN_EQ p xs0_59 xs1_58 k_span_eq_57 =v
-  (xs0_59 > 0 \/ k_span_eq_57 0 (\x_547.\k_span_eq_548.true) 0 (\x_551.\k_span_eq_552.true))
-  /\ (xs0_59 <= 0
-      \/ xs1_58 0
-          (\n_557.
-            ((xs0_59 <= 0 \/ p != n_557)
-             \/ SPAN_EQ p (xs0_59 - 1) (\x_512.\k_span_eq_xs__513.xs1_58 (x_512 + 1) k_span_eq_xs__513)
-                 (\r_span_eq00_452.
-                   \r_span_eq01_453.
-                    \r_span_eq10_454.
-                     \r_span_eq11_455.
-                      k_span_eq_57 (1 + r_span_eq00_452) (\i_398.\k_span_eq_399.k_span_eq_399 0) r_span_eq10_454
-                       r_span_eq11_455))
-            /\ (xs0_59 > 0 /\ p = n_557
-                \/ (xs0_59 <= 0
-                    \/ k_span_eq_57 0 (\x_460.\k_span_eq_461.true) (1 + (xs0_59 - 1))
-                        (\i_445.
-                          \k_span_eq_446.
-                           (i_445 != 0 \/ k_span_eq_446 n_557) /\ (i_445 = 0 \/ xs1_58 ((i_445 - 1) + 1) k_span_eq_446)))
-                   /\ (xs0_59 > 0 \/ true)))).
-Forall p        =v ForallAux p 0.
-ForallAux p x   =v p x /\ ForallAux p (x-1) /\ ForallAux p (x+1).
-Exists p        =v ExistsAux 1000 0 p.
-ExistsAux y x p =v y > 0 /\ (p x \/ ExistsAux (y-1) (x-1) p \/ ExistsAux (y-1) (x+1) p).
+                (\p0_2.
+                  \p1_1.
+                   k_main_arg1_make_intlist_6 (1 + p0_2)
+                    (\i.
+                      \k_main_arg1_make_intlist.
+                       (i != 0 \/ k_main_arg1_make_intlist n)
+                       /\ (i = 0 \/ MAKE_INTLIST true (\p0.\p1.p1 (i - 1) k_main_arg1_make_intlist))))))).
+Forall p      =v ForallAux p 0.
+ForallAux p x =v p x /\ p (0-x) /\ ForallAux p (x+1).
+Exists p      =v ExistsAux 1000 p.
+ExistsAux x p =v x > 0 /\ (p x \/ p (0-x) \/ ExistsAux (x-1) p).
