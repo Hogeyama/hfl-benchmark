@@ -1,6 +1,7 @@
 open Core
 
 module Util = struct
+
   let run_command ?(timeout=20.0) cmd =
     let read_file file = In_channel.(with_file file ~f:input_all) in
     let f_out, fd_out = Unix.mkstemp "/tmp/hfl_benchmark_tmp.stdout" in
@@ -25,6 +26,14 @@ module Util = struct
       Char.equal (yes_or_no.[0]) 'Y'
     with _ -> false
 end
+
+let dune_root =
+  let rec go dir =
+    if List.mem ~equal:String.equal (Sys.ls_dir dir) "dune-project"
+    then dir
+    else go (dir ^ "/..")
+  in
+  Filename.realpath (go (Sys.getcwd())) ^ "/"
 
 type file_type = HFL | ML | HOCHC
 let file_type_of_string =
@@ -57,11 +66,9 @@ type [@warning "-39"] params =
   }
   [@@deriving cmdliner]
 
-let params =
-  match Cmdliner.Term.(eval (params_cmdliner_term (), info "hflmc2-benchmark")) with
-  | `Ok p -> p
-  | _     -> exit 1
-let file_type = match params.file_type, params.script with
+let get_script params = dune_root^"scripts/"^params.script
+
+let get_file_type params = match params.file_type, params.script with
   | Some ty, _  -> ty
   | _, "mochi"  -> ML
   | _, "horus"  -> HOCHC
@@ -69,19 +76,9 @@ let file_type = match params.file_type, params.script with
   | _, "hflmc2" -> HFL
   | _           -> HFL
 
-let dune_root =
-  let rec go dir =
-    if List.mem ~equal:String.equal (Sys.ls_dir dir) "dune-project"
-    then dir
-    else go (dir ^ "/..")
-  in
-  Filename.realpath (go (Sys.getcwd())) ^ "/"
-
 let list_cases case_set =
   In_channel.(with_file (dune_root^"lists/"^case_set) ~f:input_all)
   |> String.split_lines
-
-let script = dune_root^"scripts/"^params.script
 
 type time = float
   [@@deriving yojson]
@@ -106,9 +103,10 @@ let kill_zombie_processes () =
   end
 
 let run_hflmc2 params case file =
+  let script = get_script params in
   if not (Sys.file_exists_exn script) then failwith ("script "^script^" not found");
-  let cmd         = [| script; file |] in
-  let timeout     = float_of_int params.timeout in
+  let cmd     = [| script; file |] in
+  let timeout = float_of_int params.timeout in
   let (p, out, err), time =
     let start = Unix.gettimeofday () in
     let r = Util.run_command ~timeout cmd in
@@ -117,20 +115,20 @@ let run_hflmc2 params case file =
   in
   if params.verbose then (Printf.printf "%s" err);
   begin match p with
-  | WEXITED code ->
+  | WEXITED 0 ->
       let result = match out with
         | "Valid"   -> Success { tag = `Valid; time }
         | "Invalid" -> Success { tag = `Invalid; time }
         | "Unknown" -> Unknown err
         | "Error"   -> Failure err
-        | _ when code = 0->
-              failwith @@ "parse error: '" ^ String.escaped out ^ "'"
-                         ^"\nexpected: 'Valid', 'Invalid', 'Unknown', or 'Error'"
         | _ ->
-              failwith @@ "script "^ script ^" failed"
-                         ^"\nstdout:\n" ^ out
-                         ^"\nsterr: \n" ^ err
+            failwith @@ "parse error: '" ^ String.escaped out ^ "'\n"
+                      ^ "expected: 'Valid', 'Invalid', 'Unknown', or 'Error'"
       in { case; result }
+  | WEXITED _ ->
+      failwith @@ "script "^ script ^" failed"
+                 ^"\nstdout:\n" ^ out
+                 ^"\nsterr: \n" ^ err
   | _ ->
       { case; result = Timeout }
   end
@@ -153,7 +151,7 @@ let run_bench params =
     |> List.fold ~init:0 ~f:max
   in
   let meta =
-    { command    = script
+    { command    = get_script params
     ; timeout    = params.timeout
     }
   in
@@ -163,7 +161,7 @@ let run_bench params =
         let pudding = String.(init (max_len - length case) ~f:(Fn.const ' ')) in
         case ^ pudding
       in
-      let file = match file_type with
+      let file = match get_file_type params with
         | HFL   -> dune_root^"inputs/hfl/"  ^case^".in"
         | ML    -> dune_root^"inputs/ml/"   ^case^".ml"
         | HOCHC -> dune_root^"inputs/hochc/"^case^".inp"
@@ -185,6 +183,11 @@ let run_bench params =
 
 let () =
   try
+    let params =
+      match Cmdliner.Term.(eval (params_cmdliner_term (), info "hflmc2-benchmark")) with
+      | `Ok p -> p
+      | _     -> exit 1
+    in
     let result = run_bench params in
     let json : Yojson.Safe.t = whole_result_to_yojson result in
     let save_file =
