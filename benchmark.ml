@@ -93,7 +93,7 @@ type profile =
 
 type success =
   { tag  : [`Valid | `Invalid]
-  ; time : (time [@default 0.0])
+  ; time : time
   ; profile : profile option
   } [@@deriving yojson]
 

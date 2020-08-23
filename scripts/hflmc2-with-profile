@@ -34,6 +34,7 @@ hflmc2 $1 | tail -n9 | {
       [ \"$RESULT\"
       , {
           tag : [\"$TAG\"],
+          time: 0.0,
           profile : {
             n_loops : $LOOP_COUNT,
             t_abstraction : $T_ABSTRACTION,
