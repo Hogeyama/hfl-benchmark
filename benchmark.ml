@@ -62,6 +62,7 @@ type [@warning "-39"] params =
   ; save_file  : string option
     (** file to save result in json format.
         Default:"./result/SCRIPT-CASE.json" *)
+  ; with_profile : bool
   ; verbose    : bool
   }
   [@@deriving cmdliner]
@@ -82,16 +83,34 @@ let list_cases case_set =
 
 type time = float
   [@@deriving yojson]
+
+type profile =
+  { n_loops : int
+  ; t_abstraction : time
+  ; t_refine : time
+  ; t_modelcheck : time
+  } [@@deriving yojson]
+
 type success =
   { tag  : [`Valid | `Invalid]
-  ; time : time
+  ; time : (time [@default 0.0])
+  ; profile : profile option
   } [@@deriving yojson]
+
 type result =
   | Success of success
   | Unknown of string
   | Failure of string
   | Timeout
   [@@deriving yojson]
+let set_time_if_success time result = match result with
+  | Success {tag;profile;_} -> Success {tag;time;profile}
+  | _ -> result
+let set_err_if_failure err result = match result with
+  | Unknown _ -> Unknown err
+  | Failure _ -> Failure err
+  | _ -> result
+
 type case_result =
   { case : string
   ; result : result
@@ -117,8 +136,16 @@ let run_hflmc2 params case file =
   begin match p with
   | WEXITED 0 ->
       let result = match out with
-        | "Valid"   -> Success { tag = `Valid; time }
-        | "Invalid" -> Success { tag = `Invalid; time }
+        | _ when params.with_profile ->
+            begin match result_of_yojson (Yojson.Safe.from_string out) with
+              | Ok result -> result
+                          |> set_time_if_success time
+                          |> set_err_if_failure err
+                    (* 設計が悪いが互換性を考えるとやむなし *)
+              | Error err -> failwith @@ "Yojson parse error: " ^ err
+            end
+        | "Valid"   -> Success { tag = `Valid; time; profile = None }
+        | "Invalid" -> Success { tag = `Invalid; time; profile = None }
         | "Unknown" -> Unknown err
         | "Error"   -> Failure err
         | _ ->

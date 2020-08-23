@@ -1,0 +1,56 @@
+#!/bin/bash
+mochi -only-result -use-temp $1 | {
+  read RESULT
+  case $RESULT in
+    "Safe!"  )
+      RESULT=Success
+      TAG=Valid
+      ;;
+    "Unsafe" )
+      RESULT=Success
+      TAG=Invalid
+      read SKIP_EMPTY_LINE
+      read SKIP_EMPTY_LINE
+      ;;
+    * )
+      RESULT=Failure
+      ;;
+  esac
+
+  if [ $RESULT = Success ]; then
+    while read line; do
+      if echo $line | sed -n '/CEGAR-cycles/!q1'; then
+        LOOP_COUNT=`echo $line | sed 's/CEGAR-cycles: \([0-9]*\)/\1/'`
+        break
+      fi
+    done
+    readarray -t REST
+
+    # 0: total: 0.556 sec
+    # 1:  pre: 0.004 sec
+    # 2:  abst: 0.253 sec
+    # 3:  mc: 0.008 sec
+    # 4:  refine: 0.226 sec
+    T_TOTAL=`echo ${REST[0]} | sed 's/total: \([0-9]\+\.[0-9]*\) sec/\1/'`
+    T_PREPROCESS=`echo ${REST[1]} | sed 's/pre: \([0-9]\+\.[0-9]*\) sec/\1/'`
+    T_ABSTRACTION=`echo ${REST[2]} | sed 's/abst: \([0-9]\+\.[0-9]*\) sec/\1/'`
+    T_MODELCHECK=`echo ${REST[3]} | sed 's/mc: \([0-9]\+\.[0-9]*\) sec/\1/'`
+    T_REFINE=`echo ${REST[4]} | sed 's/refine: \([0-9]\+\.[0-9]*\) sec/\1/'`
+    jq -n "
+      [ \"$RESULT\"
+      , {
+          tag : [\"$TAG\"],
+          profile : {
+            n_loops : $LOOP_COUNT,
+            t_abstraction : $T_ABSTRACTION,
+            t_refine : $T_REFINE,
+            t_modelcheck : $T_MODELCHECK
+          }
+        }
+      ]
+    "
+  else
+    jq -n "[ \"$RESULT\", \"\" ]"
+  fi
+}
+
