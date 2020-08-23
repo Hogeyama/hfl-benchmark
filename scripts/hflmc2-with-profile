@@ -22,14 +22,13 @@ hflmc2 $1 | tail -n9 | {
     # 1:   2
     # 2: Profiling:
     # 3:   Abstraction: 0.232259 sec
-    # 4:   Refine:      0.264909 sec
-    # 5:   Modelcheck:  0.012946 sec
+    # 4:   Modelcheck:  0.012946 sec
+    # 5:   Refine:      0.264909 sec
     # 6:   total:       0.510649 sec
     LOOP_COUNT=`echo ${REST[1]} | sed 's/^\s*\([0-9]*\)$/\1/'`
     T_ABSTRACTION=`echo ${REST[3]} | sed 's/\s*Abstraction:\s*\([0-9]\+\.[0-9]*\)\s*sec/\1/'`
-    T_REFINE=`echo ${REST[4]} | sed 's/\s*Refine:\s*\([0-9]\+\.[0-9]*\)\s*sec/\1/'`
-    T_MODELCHECK=`echo ${REST[5]} | sed 's/\s*Modelcheck:\s*\([0-9]\+\.[0-9]*\)\s*sec/\1/'`
-    T_TOTAL=`echo ${REST[6]} | sed 's/\s*total:\s*\([0-9]\+\.[0-9]*\)\s*sec/\1/'`
+    T_MODELCHECK=`echo ${REST[4]} | sed 's/\s*Modelcheck:\s*\([0-9]\+\.[0-9]*\)\s*sec/\1/'`
+    T_REFINE=`echo ${REST[5]} | sed 's/\s*Refine:\s*\([0-9]\+\.[0-9]*\)\s*sec/\1/'`
     jq -n "
       [ \"$RESULT\"
       , {
